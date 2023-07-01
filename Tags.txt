@@ -1,0 +1,1 @@
+﻿head,meta charset="utf-8",!DOCTYPE html,html,title,body
