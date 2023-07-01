@@ -16,9 +16,6 @@ namespace HtmlParser
             I.CleanSpaces(I.GetInput());
             I.CleanLines(I.GetInput());
             I.CleanTags(I.GetInput());
-            p.SplitString(I.GetInput());
-            foreach (object o in p.Objects)
-            { Console.WriteLine(o); }
             Console.Write(I.GetInput());
 
             Console.WriteLine("test");
