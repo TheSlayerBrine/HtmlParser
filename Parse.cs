@@ -9,11 +9,6 @@ namespace HtmlParser
 {
     internal class Parse
     {
-        public List<string> Objects;
-        public IEnumerable<string> Query;
-        public void SplitString (string input)
-        {
-            
-        }
+       
     }
 }
