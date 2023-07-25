@@ -1,42 +1,51 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 public class Input
 {
     private readonly string path = @"C:\Users\cgame\source\repos\Task-HtmlParser\HtmlParser\Input.html";
     private string input;
-    string taglist = File.ReadAllText(@"C:\Users\cgame\source\repos\Task-HtmlParser\HtmlParser\Tags.txt");
-    public List<string> tags;
+    private string tagList;
+    private List<string> tags;
+
     public void SetTagsList()
     {
-        this.tags = taglist?.Split(',').ToList(); 
+        this.tagList = File.ReadAllText("C:\\Users\\cgame\\source\\repos\\Task-HtmlParser\\HtmlParser\\DoubleTags.txt");
+        this.tags = tagList?.Split(',').Select(tag => tag.Trim()).ToList();
     }
+
     public void SetInput()
     {
         this.input = File.ReadAllText(path);
     }
+
     public string GetInput()
-    { return this.input; }
-    public void CleanSpaces(string input)
     {
-       
-       this.input = Regex.Replace(input, @"[^\S\r\n]+", " ");
-      
+        return this.input;
     }
-    public void CleanLines(string input)
-    { this.input = Regex.Replace(input, @"^\s+$[\r\n]*", string.Empty, RegexOptions.Multiline); 
-    }
-    public void CleanTags(string input)
+
+    public void CleanSpaces()
     {
-        for(int i=0; i< this.input.Length; i++) 
+        this.input = Regex.Replace(this.input, @"[^\S\r\n]+", " ");
+    }
+
+    public void CleanLines()
+    {
+        this.input = Regex.Replace(this.input, @"^\s+$[\r\n]*", string.Empty, RegexOptions.Multiline);
+    }
+
+    public class TagFormatter
+    {
+        public string FormatOpeningTag(string tag)
         {
-            if (this.input[i] == '<' && this.input[i + 1] == ' ')
-             this.input = this.input.Remove(i + 1, 1);
-            if (this.input[i] == '<' && this.input[i + 1] == '/' && this.input[i + 2] == ' ')
-                this.input = this.input.Remove(i + 2, 1);
-            if (this.input[i] == ' ' && this.input[i + 1] == '>')
-                this.input = this.input.Remove(i, 1);
+            return "<" + tag.Trim() + ">";
+        }
+
+        public string FormatClosingTag(string tag)
+        {
+            return "</" + tag.Trim() + ">";
         }
     }
 }
